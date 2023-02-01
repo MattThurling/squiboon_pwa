@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
   import { ref } from 'vue'
   import { supabase } from '../supabase'
 
@@ -26,7 +26,7 @@
 <template>
   <form class="row flex-center flex" @submit.prevent="handleLogin">
     <div class="col-6 form-widget">
-      <h1 class="header">Squiboon</h1>
+      <h1 class="text-3xl">Squiboon</h1>
       <p class="description">Sign in via magic link with your email below</p>
       <div>
         <input class="inputField" type="email" placeholder="Your email" v-model="email" />
@@ -39,6 +39,7 @@
           :disabled="loading"
         />
       </div>
+      <button class="btn btn-primary">Daisy Daisy</button>
     </div>
   </form>
 </template>
