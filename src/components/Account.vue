@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { supabase } from '../supabase'
+  import { supabaseClient } from '../supabase'
   import { onMounted, ref, toRefs } from 'vue'
 
   const props = defineProps(['session'])
@@ -19,7 +19,7 @@
       loading.value = true
       const { user } = session!.value
 
-      let { data, error, status } = await supabase
+      let { data, error, status } = await supabaseClient
         .from('profiles')
         .select(`username, website, avatar_url`)
         .eq('id', user.id)
@@ -53,7 +53,7 @@
         updated_at: new Date(),
       }
 
-      let { error } = await supabase.from('profiles').upsert(updates)
+      let { error } = await supabaseClient.from('profiles').upsert(updates)
 
       if (error) throw error
     } catch (error) {
@@ -66,7 +66,7 @@
   async function signOut() {
     try {
       loading.value = true
-      let { error } = await supabase.auth.signOut()
+      let { error } = await supabaseClient.auth.signOut()
       if (error) throw error
     } catch (error) {
       alert('Nasty')
