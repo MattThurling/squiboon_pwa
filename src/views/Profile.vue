@@ -74,13 +74,13 @@
 
 <script setup lang="ts">
   import { supabaseClient } from '../supabase'
-  import { useSessionStore } from "../stores/session"
+  import { useUserStore } from "../stores/user"
   import { pinia } from "../stores"
-  const sessionStore = useSessionStore(pinia)
+  const sessionStore = useUserStore(pinia)
 
   const upsertProfile = async () => {
     try {
-      const { user } = sessionStore.$state.session
+      const user = sessionStore.$state
 
       const updates = {
         id: user.id,

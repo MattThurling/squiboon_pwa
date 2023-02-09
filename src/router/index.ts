@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
-import { useSessionStore } from "../stores/session"
-import { supabaseClient } from "../supabase"
+import { useUserStore } from "../stores/user"
 import { pinia } from "../stores"
 import Welcome from "../views/Welcome.vue"
 import Name from "../views/Name.vue"
@@ -11,7 +10,7 @@ import Profile from "../views/Profile.vue"
 import Summary from "../views/Summary.vue"
 import Auth from "../views/Auth.vue"
 
-const sessionStore = useSessionStore(pinia)
+const userStore = useUserStore(pinia)
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -80,35 +79,18 @@ const router = createRouter({
   ],
 })
 
-supabaseClient.auth.getSession().then(({ data }) => {
-  if (data.session) {
-    sessionStore.setSession(sessionStore.$state, data.session)
-  } else {
-    // TODO create a an action in the store to do this
-    sessionStore.setSession(sessionStore.$state, { session: {user: {id: null}} })
-  }
-})
-
-supabaseClient.auth.onAuthStateChange((_, _session) => {
-  if (_session) {
-    sessionStore.setSession(sessionStore.$state, _session)
-  } else {
-    // TODO create a an action in the store to do this
-    sessionStore.setSession(sessionStore.$state, { session: {user: {id: null}} })
-  }
-})
-
 
 router.beforeEach((to, from, next) => {
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const currentUser = sessionStore.$state.session.user;
+  const currentUser = userStore.$state
+  console.log('currentUser', currentUser.id)
+  console.log('requiresAuth', requiresAuth)
 
   if(requiresAuth && !currentUser.id) {
     next({name: 'auth'})
-  // } else if(!requiresAuth && currentUser.id) {
-  //   next({name: 'welcome'})
-  // }
+  } else if(!requiresAuth && currentUser.id) {
+    next({name: 'welcome'})
   } else next()
 })
 
