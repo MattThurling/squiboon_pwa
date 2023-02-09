@@ -25,7 +25,7 @@
 
 <template>
   <form @submit.prevent="handleLogin">
-    <div class="h-screen flex flex-col justify-center items-center p-28">
+    <div class="h-screen flex flex-col justify-center items-center py-28">
       <h1 class="text-5xl mb-12">
         Squiboon
       </h1>

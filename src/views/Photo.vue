@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col justify-center items-center p-28">
+  <div class="h-screen flex flex-col justify-center items-center py-12 px-4">
     <h1 class="text-4xl mb-12">
       Add a photo to your profile if you would like
     </h1>

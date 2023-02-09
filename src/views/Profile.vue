@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-4 mt-16">
+    <div class="mt-16">
       <div class="card bg-gray-100 rounded-lg p-4 m-4">
         <h3 class="text-xl">Activities I do</h3>
         <hr class="mb-2">
@@ -59,7 +59,7 @@
         </ul>
       </div>
     </div>
-    <div class="text-center mt-16">
+    <div class="text-center py-16">
       <h2 class="text-2xl">Are you happy with your profile?</h2>
       <a href="/summary" @click=upsertProfile class="btn btn-lg btn-primary mx-5 mt-12">
         Yes, sumbit

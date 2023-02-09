@@ -1,10 +1,10 @@
 <template>
-  <div class="h-screen flex flex-col justify-center items-center p-28">
-    <h1 class="text-4xl mb-12">
+  <div class="h-screen flex flex-col justify-center items-center py-12 px-4">
+    <h1 class="text-2xl mb-12">
       The following clubs and activities are available at Whiteley Village. Please say which (if any) you currently belong to:
     </h1>
-    <div class="w-full grid grid-cols-3">
-      <div class="form-control bg-gray-100 p-4 m-4 rounded-lg" v-for="choice in choices" :key="choice.id">
+    <div class="w-full">
+      <div class="form-control bg-gray-100 p-4 my-4 rounded-lg" v-for="choice in choices" :key="choice.id">
         <label class="cursor-pointer label">
           <span class="label-text text-xl">{{ choice.clubs.name }}</span>
           <input v-model="choice.selected" type="checkbox" class="checkbox checkbox-lg" />
