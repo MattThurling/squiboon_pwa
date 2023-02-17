@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 import { useUserStore } from "../stores/user"
 import { pinia } from "../stores"
+import { supabaseClient } from "../supabase"
 import Welcome from "../views/Welcome.vue"
 import Name from "../views/Name.vue"
 import ClubsBelong from "../views/ClubsBelong.vue"
@@ -116,8 +117,8 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to, from, next) => {
-
+router.beforeEach(async(to, from, next) => {
+  const { data } = await supabaseClient.auth.getUser()
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const currentUser = userStore.$state
   console.log('currentUser', currentUser.id)
