@@ -1,58 +1,99 @@
 <template>
-  <div class="h-screen flex flex-col justify-center items-center p-28">
-    <h1 class="text-4xl mb-12">
+  
+  <div class="flex flex-col justify-center items-center pt-12 px-4">
+    <h1 class="text-4xl mb-12 text-center">
       Please enter your contact information
     </h1>
 
-    <div class="flex items-center justify-around w-full mb-5">
+    <div class="mb-8">
       <input
         type="email"
-        placeholder="Enter your email"
-        class="input input-bordered input-lg w-full max-w-xs"
+        class="input input-bordered input-lg w-full max-w-sm mb-2"
+        :value="userStore.$state.email"
+        disabled
       />
-      <input
-        v-model="showEmail"
-        type="checkbox"
-        class="checkbox checkbox-lg"
-      />
-    </div>
-
-    <div class="flex items-center justify-around w-full">
-      <input
-        v-model="phone"
-        type="phone"
-        placeholder="Enter your phone"
-        class="input input-bordered input-lg w-full max-w-xs" />
-      <input
-        v-model="showPhone"
-        type="checkbox"
-        class="checkbox checkbox-lg"
-       />
+      <div class="grid grid-cols-9">
+        <div class="col-span-8">
+          Show in directory
+        </div>
+        <input
+          v-model="showEmail"
+          type="checkbox"
+          class="checkbox checkbox-lg"
+        />
+      </div>
     </div>
     
-    <button class="btn btn-lg btn-primary mx-5 mt-12" @click="handleClick">
-      Next
-    </button>
+    <div class="mb-8">
+      <input
+        placeholder="Enter your phone number"
+        type="text"
+        class="input input-bordered input-lg w-full max-w-sm mb-2"
+        v-model="phone"
+      />
+      <div class="grid grid-cols-9">
+        <div class="col-span-8">
+          Show in directory
+        </div>
+        <input
+          
+          v-model="showPhone"
+          type="checkbox"
+          class="checkbox checkbox-lg"
+        />
+      </div>
+    </div>
+      
+
+
+      <div class="mt-12">
+        <button class="btn btn-lg btn-outline btn-primary mx-4" @click="router.back()" >
+          Back
+        </button>
+        <button class="btn btn-lg btn-primary mx-4" @click="handleClick">
+          Next
+        </button>
+      </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import { useFormStore } from '../stores/form';
+  import { ref, onMounted } from 'vue'
+  import { useUserStore } from '../stores/user'
+  import { supabaseClient } from '../supabase'
+  import { useRouter } from 'vue-router'
 
+  const userStore = useUserStore()
   const phone=ref<string>('')
   const showPhone=ref<boolean>(false)
   const showEmail=ref<boolean>(false)
+  const router = useRouter()
 
-  const formStore = useFormStore()
+  onMounted(async () => {
+    const { data, error } = await supabaseClient
+      .from('profiles')
+      .select(`phone, show_phone, show_email`)
+      .eq('id', userStore.$state.id)
+      .single()
+    console.log(error)
+    if (data) {
+      phone.value = data.phone
+      showPhone.value = data.show_phone
+      showEmail.value = data.show_email
+    }
+  })
 
-  const handleClick = () => {
-    formStore.setPhone(formStore.$state, {
-      number: phone.value,
-      show: showPhone.value
-    })
-    formStore.setEmail(formStore.$state, {
-      show: showEmail.value
-    })
+  const handleClick = async() => {
+    const { error } = await supabaseClient
+      .from('profiles')
+      .update({
+        phone: phone.value,
+        show_phone: showPhone.value,
+        show_email: showEmail.value
+      })
+      .eq('id', userStore.$state.id)
+      .select()
+    router.push('/profile')
   }
 </script>

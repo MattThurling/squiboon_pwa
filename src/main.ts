@@ -28,6 +28,7 @@ supabaseClient.auth.onAuthStateChange((_, _session) => {
     console.log('_session', _session.user)
     userStore.setUser(userStore.$state, _session.user)
     console.log('store', userStore.$state)
+    // router.push('/') TODO: FIX
   } else {
     console.log('_', _session)
     userStore.setUser(userStore.$state, {id: null, email: null})

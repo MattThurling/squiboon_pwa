@@ -3,7 +3,11 @@ import { useUserStore } from "../stores/user"
 import { pinia } from "../stores"
 import Welcome from "../views/Welcome.vue"
 import Name from "../views/Name.vue"
-import ClubsAvailable from "../views/ClubsAvailable.vue"
+import ClubsBelong from "../views/ClubsBelong.vue"
+import ClubsWanted from "../views/ClubsWanted.vue"
+import TopicsWanted from "../views/TopicsWanted.vue"
+import SkillsOffered from "../views/SkillsOffered.vue"
+import SkillsWanted from "../views/SkillsWanted.vue"
 import Photo from "../views/Photo.vue"
 import Contact from "../views/Contact.vue"
 import Profile from "../views/Profile.vue"
@@ -37,9 +41,41 @@ const router = createRouter({
       }
     },
     {
-      path: "/clubs-available",
-      name: "clubs-available",
-      component: ClubsAvailable,
+      path: "/clubs-belong",
+      name: "clubs-belong",
+      component: ClubsBelong,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: "/clubs-wanted",
+      name: "clubs-wanted",
+      component: ClubsWanted,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: "/topics-wanted",
+      name: "topics-wanted",
+      component: TopicsWanted,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: "/skills-wanted",
+      name: "skills-wanted",
+      component: SkillsWanted,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: "/skills-offered",
+      name: "skills-offered",
+      component: SkillsOffered,
       meta: {
         requiresAuth: true,
       }
