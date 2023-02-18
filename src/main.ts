@@ -8,6 +8,9 @@ import router from "./router"
 
 import "./assets/main.css"
 
+const nfc = new window.NDEFReader();
+console.log(nfc)
+
 const app = createApp(App)
 
 app.use(pinia)
@@ -36,6 +39,9 @@ supabaseClient.auth.onAuthStateChange((_, _session) => {
   }
 })
 
+app.use(nfc);
 app.use(router);
+
+
 
 app.mount("#app");

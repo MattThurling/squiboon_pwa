@@ -1,0 +1,1 @@
+export const nfc = new window.NDEFReader();

@@ -9,6 +9,7 @@ import ClubsWanted from "../views/ClubsWanted.vue"
 import TopicsWanted from "../views/TopicsWanted.vue"
 import SkillsOffered from "../views/SkillsOffered.vue"
 import SkillsWanted from "../views/SkillsWanted.vue"
+import Nfc from "../views/Nfc.vue"
 import Photo from "../views/Photo.vue"
 import Contact from "../views/Contact.vue"
 import Profile from "../views/Profile.vue"
@@ -109,6 +110,14 @@ const router = createRouter({
       path: "/summary",
       name: "summary",
       component: Summary,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: "/nfc",
+      name: "nfc",
+      component: Nfc,
       meta: {
         requiresAuth: true,
       }
