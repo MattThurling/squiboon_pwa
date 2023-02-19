@@ -6,11 +6,17 @@
     <button class="btn btn-lg btn-primary mx-4" @click="scan">
       Scan
     </button>
+    <div class="text-center mt-8">
+      <h1>{{ sId }}</h1>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import { nfc } from '../nfc'
+  import { ref } from 'vue'
+
+  const sId = ref('007')
   const scan = async () => {
   console.log('scan')
   try {
@@ -20,6 +26,7 @@
 
     const listenerObject: EventListenerObject = {
       handleEvent: (e: any) => {
+        sId.value = e.serialNumber
         console.log(`> Serial Number: ${e.serialNumber}`)
         console.log(`> Records: (${e.message.records.length})`)
       },
