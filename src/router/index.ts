@@ -118,9 +118,6 @@ const router = createRouter({
       path: "/nfc",
       name: "nfc",
       component: Nfc,
-      meta: {
-        requiresAuth: true,
-      }
     },
   ],
 })
