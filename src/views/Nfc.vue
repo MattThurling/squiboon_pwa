@@ -7,7 +7,8 @@
       Scan
     </button>
     <div class="text-center mt-8">
-      <h1>{{ sId }}</h1>
+      <p>{{ info }}</p>
+      <p>{{ sId }}</p>
     </div>
   </div>
 </template>
@@ -16,13 +17,15 @@
   import { nfc } from '../nfc'
   import { ref } from 'vue'
 
-  const sId = ref('007')
+  const sId = ref('---')
+  const info = ref('Press the button to scan your NFC tag.')
   const scan = async () => {
   console.log('scan')
   try {
 
     await nfc.scan()
     console.log('> Scan started')
+    info.value = 'Scan started. Hold your NFC tag near the device.'
 
     const listenerObject: EventListenerObject = {
       handleEvent: (e: any) => {
